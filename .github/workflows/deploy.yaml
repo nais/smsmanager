@@ -22,9 +22,9 @@ jobs:
           DOCKER_PASSWORD: ${{ secrets.GITHUB_TOKEN }}
         run: echo "$DOCKER_PASSWORD" | docker login --username "$DOCKER_USERNAME" --password-stdin docker.pkg.github.com
       - name: Build image
-        run: docker build -t ${{ IMAGE }} .
+        run: docker build -t $IMAGE .
       - name: Push image
-        run: docker push ${{ IMAGE }}
+        run: docker push $IMAGE
 
   deploy:
     name: Deploy to Kubernetes
