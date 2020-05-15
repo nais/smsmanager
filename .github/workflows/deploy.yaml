@@ -1,0 +1,54 @@
+name: Deploy to navikt/nais-yaml
+on:
+  push:
+    branches:
+      - master
+
+env:
+  IMAGE_NAME: docker.pkg.github.com/${{ GITHUB_REPOSITORY }}/${{ NAME }}
+
+jobs:
+  build-push:
+    name: Create and push Docker image
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v1
+      - name: Set image tag
+        run: echo ::set-env name=IMAGE::$(IMAGE_NAME):$(date "+%Y.%m.%d")-$(git rev-parse --short HEAD)
+      - name: Login to Github Package Registry
+        env:
+          DOCKER_USERNAME: x-access-token
+          DOCKER_PASSWORD: ${{ secrets.GITHUB_TOKEN }}
+        run: echo "$DOCKER_PASSWORD" | docker login --username "$DOCKER_USERNAME" --password-stdin docker.pkg.github.com
+      - name: Build image
+        run: docker build -t ${{ IMAGE }} .
+      - name: Push image
+        run: docker push ${{ IMAGE }}
+
+  deploy:
+    name: Deploy to Kubernetes
+    needs: build-push
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v1
+      - name: Set image tag
+        run: echo ::set-env name=IMAGE::$(IMAGE_NAME):$(date "+%Y.%m.%d")-$(git rev-parse --short HEAD)
+      - name: Bump version in nais-yaml
+        env:
+          DEPLOY_KEY: ${{ secrets.NAIS_YAML_DEPLOY_KEY }}
+          GIT_SSH_COMMAND: "ssh -o StrictHostKeyChecking=no"
+      run: |
+        export NAIS_YAML=${GITHUB_WORKSPACE}/nais-yaml
+        eval "$(ssh-agent -s)"
+        ssh-add - <<< "${DEPLOY_KEY}"
+        mkdir -p $NAIS_YAML
+        git clone git@github.com:navikt/nais-yaml.git $NAIS_YAML
+        cd $NAIS_YAML
+        git config user.email "aura@nav.no"
+        git config user.name "NAIS deploy pipeline"
+        sed -E -i "s#image: .+#image: ${IMAGE}#" vars/smsmanager.yaml
+        git add .
+        git --no-pager diff --cached
+        git commit -a -m "Bump SMSManager to version ${version}"
+        git push
