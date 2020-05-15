@@ -26,7 +26,7 @@ jobs:
         run: docker push $IMAGE
       - name: Set IMAGE as output
         id: image
-        run: echo ::set-output name=IMAGE::${IMAGE}
+        run: echo ::set-output name=image::${IMAGE}
 
   deploy:
     name: Deploy to Kubernetes
