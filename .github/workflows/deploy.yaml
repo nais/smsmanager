@@ -5,7 +5,7 @@ on:
       - master
 
 env:
-  IMAGE_NAME: docker.pkg.github.com/${{ GITHUB_REPOSITORY }}/${{ NAME }}
+  IMAGE_NAME: "docker.pkg.github.com/${ GITHUB_REPOSITORY }/${ NAME }"
 
 jobs:
   build-push:
