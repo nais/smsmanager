@@ -15,7 +15,7 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v1
       - name: Set image tag
-        run: echo ::set-env name=IMAGE::$(IMAGE_NAME):$(date "+%Y.%m.%d")-$(git rev-parse --short HEAD)
+        run: echo ::set-env name=IMAGE::${IMAGE_NAME}:$(date "+%Y.%m.%d")-$(git rev-parse --short HEAD)
       - name: Login to Github Package Registry
         env:
           DOCKER_USERNAME: x-access-token
