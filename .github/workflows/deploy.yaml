@@ -41,6 +41,7 @@ jobs:
           GIT_SSH_COMMAND: "ssh -o StrictHostKeyChecking=no"
         run: |
           export NAIS_YAML=${GITHUB_WORKSPACE}/nais-yaml
+          export version=${{needs.build-push.outputs.image}}
           eval "$(ssh-agent -s)"
           ssh-add - <<< "${DEPLOY_KEY}"
           mkdir -p $NAIS_YAML
@@ -48,7 +49,7 @@ jobs:
           cd $NAIS_YAML
           git config user.email "aura@nav.no"
           git config user.name "NAIS deploy pipeline"
-          sed -E -i "s#image: .+#image: ${{needs.build-push.outputs.image}}#" vars/smsmanager.yaml
+          sed -E -i "s#image: .+#image: ${version}#" vars/smsmanager.yaml
           git add .
           git --no-pager diff --cached
           git commit -a -m "Bump SMSManager to version ${version}"
