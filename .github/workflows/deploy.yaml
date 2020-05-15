@@ -14,7 +14,7 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v1
       - name: Set image tag
-        run: echo ::set-env name=IMAGE::docker.pkg.github.com/${GITHUB_REPOSITORY}/smsmanager:$(date "+%Y.%m.%d")-$(git rev-parse --short HEAD)
+        run: echo ::set-env name=IMAGE::docker.pkg.github.com/${GITHUB_REPOSITORY}/smsmanager:$(date "+%Y-%m-%d")-$(git rev-parse --short HEAD)
       - name: Login to Github Package Registry
         env:
           DOCKER_USERNAME: x-access-token
@@ -48,8 +48,7 @@ jobs:
           cd $NAIS_YAML
           git config user.email "aura@nav.no"
           git config user.name "NAIS deploy pipeline"
-          echo ${needs.build-push.outputs.image}
-          sed -E -i "s#image: .+#image: ${needs.build-push.outputs.image}#" vars/smsmanager.yaml
+          sed -E -i "s#image: .+#image: ${{needs.build-push.outputs.image}}#" vars/smsmanager.yaml
           git add .
           git --no-pager diff --cached
           git commit -a -m "Bump SMSManager to version ${version}"
