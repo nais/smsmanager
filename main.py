@@ -14,6 +14,9 @@ password = os.environ['password']
 def transformText(text):
     return text.replace(' ', '%20')
 
+def formatMessage(alert):
+    return '[{}] {}%0a{}'.format(alert['status'].upper(), alert['labels']['alertname'], alert['annotations']['description'])
+
 def sendSMS(message, recipients):
     url = UnformattedURL.format(recipients, message, username, password)
     response = urllib.request.urlopen(url).read()
@@ -28,5 +31,5 @@ async def index():
 async def sms(request: Request):
     json = await request.json()
     for alert in json['alerts']:
-        message = '{}%0a{}'.format(alert['labels']['alertname'], alert['annotations']['description'])
+        message = formatMessage(alert)
         sendSMS(transformText(message), alert['annotations']['recipients'])
