@@ -10,12 +10,17 @@ app = FastAPI()
 UnformattedURL = os.environ['sms_endpoint']
 username = os.environ['username']
 password = os.environ['password']
+cluster = os.getenv('cluster', 'uspesifisert')
 
 def transformText(text):
     return text.replace(' ', '%20')
 
 def formatMessage(alert):
-    return '[{}] {}%0a{}'.format(alert['status'].upper(), alert['labels']['alertname'], alert['annotations']['description'])
+    return '[{}] {} in {}%0a{}'.format(
+        alert['status'].upper(),
+        alert['labels']['alertname'],
+        cluster,
+        alert['annotations']['description'])
 
 def sendSMS(message, recipients):
     url = UnformattedURL.format(recipients, message, username, password)
