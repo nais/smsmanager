@@ -35,6 +35,9 @@ async def index():
 @app.post("/sms")
 async def sms(request: Request):
     json = await request.json()
+    if len(json['alerts']) > 1:
+        logger.info(json['alerts'])
+
     for alert in json['alerts']:
         message = formatMessage(alert)
         sendSMS(transformText(message), alert['annotations']['recipients'])
