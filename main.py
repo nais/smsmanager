@@ -13,7 +13,7 @@ password = os.environ['password']
 cluster = os.getenv('cluster', 'uspesifisert')
 
 def transformText(text):
-    return text.replace(' ', '%20')
+    return text.replace(' ', '%20').replace('\n', '%0a')
 
 def formatMessage(alert):
     return '[{}] {} in {}%0a{}'.format(
