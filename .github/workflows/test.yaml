@@ -1,0 +1,12 @@
+name: Deploy to navikt/nais-yaml
+on: push
+
+jobs:
+  test-code:
+    name: Test code with pytest
+    runs-on: ubuntu-latest
+    steps:
+      - name: Python Pytest Github Action
+        uses: fylein/python-pytest-github-action@v2
+        with:
+          args: pip3 install -r requirements.txt && pytest
