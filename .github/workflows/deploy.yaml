@@ -12,7 +12,7 @@ jobs:
       image: ${{ steps.image.outputs.image }}
     steps:
       - name: Checkout code
-        uses: actions/checkout@v1
+        uses: actions/checkout@v2
       - name: Set image tag
         run: echo "IMAGE=docker.pkg.github.com/${GITHUB_REPOSITORY}/smsmanager:$(date "+%Y-%m-%d")-$(git rev-parse --short HEAD)" >> $GITHUB_ENV
       - name: Login to Github Package Registry
@@ -34,21 +34,19 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
-        uses: actions/checkout@v1
+        uses: actions/checkout@v2
+      - name: Checkout nais-yaml
+        uses: actions/checkout@v2
+        with:
+          repository: navikt/nais-yaml
+          token: ${{ secrets.SRVNAIS_REPO_PUSH_PAT }}
+          path: nais-yaml
       - name: Bump version in nais-yaml
-        env:
-          DEPLOY_KEY: ${{ secrets.NAIS_YAML_DEPLOY_KEY }}
-          GIT_SSH_COMMAND: "ssh -o StrictHostKeyChecking=no"
         run: |
-          export NAIS_YAML=${GITHUB_WORKSPACE}/nais-yaml
           export version=${{needs.build-push.outputs.image}}
-          eval "$(ssh-agent -s)"
-          ssh-add - <<< "${DEPLOY_KEY}"
-          mkdir -p $NAIS_YAML
-          git clone git@github.com:navikt/nais-yaml.git $NAIS_YAML
-          cd $NAIS_YAML
-          git config user.email "aura@nav.no"
-          git config user.name "NAIS deploy pipeline"
+          cd nais-yaml
+          git config user.name "$GITHUB_ACTOR"
+          git config user.email "$GITHUB_ACTOR@users.noreply.github.com"
           sed -E -i "s#image: docker.pkg.github.com/nais/smsmanager/smsmanager:.+#image: ${version}#" vars/global.yaml
           git add .
           git --no-pager diff --cached
