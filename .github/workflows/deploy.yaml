@@ -50,5 +50,5 @@ jobs:
           sed -E -i "s#image: docker.pkg.github.com/nais/smsmanager/smsmanager:.+#image: ${version}#" vars/global.yaml
           git add .
           git --no-pager diff --cached
-          git --no-verify commit -a -m "Bump SMSManager to version ${version}"
+          git commit -a -m "Bump SMSManager to version ${version}"
           git push
