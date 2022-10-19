@@ -1,0 +1,12 @@
+image:
+  repository: europe-north1-docker.pkg.dev/nais-io/nais/images/smsmanager
+  tag: "master"
+  pullPolicy: IfNotPresent
+  pullSecret: "gpr-credentials"
+
+smsEndpoint: ""
+smsUsername: ""
+smsPassword: ""
+
+cluster: "" # mapped by fasit
+

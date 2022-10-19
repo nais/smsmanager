@@ -1,0 +1,38 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Release.Name }}
+  labels: {{ include "smsmanager.labels" . | nindent 4 }}
+spec:
+  replicas: 2
+  selector:
+    matchLabels: {{ include "smsmanager.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      labels: {{ include "smsmanager.labels" . | nindent 8 }}
+    spec:
+      imagePullSecrets:
+        - name: {{ .Values.image.pullSecret }}
+      containers:
+        - name: {{ .Release.Name }}
+          image: {{ .Values.image.repository }}:{{ .Values.image.tag }}
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          ports:
+            - name: http
+              containerPort: 80
+              protocol: TCP
+          env:
+            - name: sms_endpoint
+              value: {{ .Values.smsEndpoint }}
+            - name: cluster
+              value: {{ .Values.cluster }}
+            - name: username
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .Release.Name }}
+                  key: username
+            - name: password
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .Release.Name }}
+                  key: password
