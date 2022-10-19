@@ -23,7 +23,7 @@ jobs:
         uses: "google-github-actions/auth@v0.8.3"
         with:
           workload_identity_provider: ${{ secrets.NAIS_IO_WORKLOAD_IDENTITY_PROVIDER }}
-          service_account: "gh-ingress-to-terraform-dns@nais-io.iam.gserviceaccount.com"
+          service_account: "gh-smsmanager@nais-io.iam.gserviceaccount.com"
           token_format: "access_token"
       - name: Set up Docker Buildx
         id: buildx
@@ -38,7 +38,7 @@ jobs:
         id: metadata
         uses: docker/metadata-action@v4
         with:
-          images: ${{ env.REGISTRY }}/ingress-to-terraform-dns
+          images: ${{ env.REGISTRY }}/smsmanager
           tags: |
             type=schedule
             type=ref,event=branch
