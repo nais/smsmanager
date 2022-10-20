@@ -13,6 +13,9 @@ spec:
     spec:
       imagePullSecrets:
         - name: {{ .Values.image.pullSecret }}
+
+      securityContext:
+        {{- toYaml .Values.podSecurityContext | nindent 8}}
       containers:
         - name: {{ .Release.Name }}
           image: {{ .Values.image.repository }}:{{ .Values.image.tag }}
@@ -36,3 +39,5 @@ spec:
                 secretKeyRef:
                   name: {{ .Release.Name }}
                   key: password
+          securityContext:
+            {{- toYaml .Values.securityContext | nindent 12 }}
