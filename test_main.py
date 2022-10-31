@@ -8,7 +8,7 @@ environ['sms_endpoint'] = 'sms.no?recipients={}&message={}&username={}&password=
 environ['username'] = 'testClient'
 environ['password'] = '123'
 
-from main import app, transformText, formatMessage
+from main import app, transform_text, format_message
 
 client = TestClient(app)
 
@@ -20,10 +20,10 @@ def test_index():
 class TestTransformText:
     def test_simple(self):
         textToTransform = 'hello world'
-        text = transformText(textToTransform)
+        text = transform_text(textToTransform)
         assert text == 'hello%20world'
 
     def test_newline(self):
         textToTransform = 'hello\nworld'
-        text = transformText(textToTransform)
+        text = transform_text(textToTransform)
         assert text == 'hello%0aworld'
