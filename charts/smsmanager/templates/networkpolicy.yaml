@@ -1,0 +1,21 @@
+---
+{{- if ne .Values.clusterKind "onprem" }}
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: {{ .Release.Name }}
+spec:
+  egress:
+    - {}
+  ingress:
+    - from:
+      - podSelector:
+          matchLabels:
+            app.kubernetes.io/name: prometheus
+            prometheus: "monitoring-nais-prometheus"
+  policyTypes:
+    - Egress
+    - Ingress
+  podSelector:
+    matchLabels: {{ include "smsmanager.selectorLabels" . | nindent 6 }}
+{{- end }}

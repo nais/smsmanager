@@ -9,6 +9,7 @@ smsUsername: ""
 smsPassword: ""
 
 cluster: "" # mapped by fasit
+clusterKind: "" # mapped by fasit
 
 podSecurityContext: {}
 
