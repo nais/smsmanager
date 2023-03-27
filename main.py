@@ -39,14 +39,14 @@ async def index():
 
 
 @app.post("/sms")
-async def sms(request: Request):
+async def sms(request: Request, recipients):
     json = await request.json()
     if len(json['alerts']) > 1:
         logger.info(json['alerts'])
 
     for alert in json['alerts']:
         message = format_message(alert)
-        send_sms(transform_text(message), alert['annotations']['recipients'])
+        send_sms(transform_text(message), recipients)
 
 
 if __name__ == "__main__":
