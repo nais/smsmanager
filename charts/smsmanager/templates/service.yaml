@@ -6,4 +6,4 @@ spec:
   selector: {{ include "smsmanager.selectorLabels" . | nindent 4 }}
   ports:
     - port: 80
-      targetPort: 80
+      targetPort: 8080
