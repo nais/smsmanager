@@ -11,8 +11,8 @@ spec:
     - from:
       - podSelector:
           matchLabels:
-            app.kubernetes.io/name: prometheus
-            prometheus: "monitoring-nais-prometheus"
+            app.kubernetes.io/name: alertmanager
+            alertmanager: "monitoring-nais-prometheus"
   policyTypes:
     - Egress
     - Ingress
