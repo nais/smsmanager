@@ -3,8 +3,7 @@ kind: Service
 metadata:
   name: {{ .Release.Name }}
 spec:
-  selector:
-    app: {{ .Release.Name }}
+  selector: {{ include "smsmanager.selectorLabels" . | nindent 4 }}
   ports:
     - port: 80
       targetPort: 80
