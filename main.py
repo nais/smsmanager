@@ -11,7 +11,6 @@ app = FastAPI()
 endpoint = os.environ['sms_endpoint']
 username = os.environ['username']
 password = os.environ['password']
-cluster = os.getenv('cluster', 'uspesifisert')
 
 
 def transform_text(text):
@@ -22,8 +21,8 @@ def format_message(alert):
     return '[{}] {} in {}%0a{}'.format(
         alert['status'].upper(),
         alert['labels']['alertname'],
-        cluster,
-        alert['annotations']['description'])
+        alert['labels']['tenant_cluster_id'],
+        alert['annotations']['summary'])
 
 
 def send_sms(message, recipients):

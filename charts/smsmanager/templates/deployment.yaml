@@ -26,8 +26,6 @@ spec:
           env:
             - name: sms_endpoint
               value: {{ .Values.smsEndpoint }}
-            - name: cluster
-              value: {{ .Values.cluster }}
             - name: username
               valueFrom:
                 secretKeyRef:
