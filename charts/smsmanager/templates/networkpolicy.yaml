@@ -5,17 +5,31 @@ kind: NetworkPolicy
 metadata:
   name: {{ .Release.Name }}
 spec:
-  egress:
-    - {}
   ingress:
     - from:
       - podSelector:
-          matchLabels:
-            app.kubernetes.io/name: alertmanager
-            alertmanager: "monitoring-nais-prometheus"
+          matchExpressions:
+            - {key: app.kubernetes.io/name, operator: In, values: [alertmanager]}
+            - {key: alertmanager, operator: In, values: [monitoring-nais-alertmanager,monitoring-tenant-alertmanager]}
   policyTypes:
-    - Egress
     - Ingress
   podSelector:
     matchLabels: {{ include "smsmanager.selectorLabels" . | nindent 6 }}
+---
+apiVersion: networking.gke.io/v1alpha3
+kind: FQDNNetworkPolicy
+metadata:
+  name: {{ .Release.Name}}-fqdn
+spec:
+  egress:
+  - ports:
+    - port: 8080
+      protocol: TCP
+    to:
+    - fqdns:
+      - sysmanp.adeo.no
+  podSelector:
+    matchLabels: {{ include "smsmanager.selectorLabels" . | nindent 6 }}
+  policyTypes:
+  - Egress
 {{- end }}
