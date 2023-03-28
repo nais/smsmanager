@@ -8,9 +8,8 @@ spec:
   ingress:
     - from:
       - podSelector:
-          matchExpressions:
-            - {key: app.kubernetes.io/name, operator: In, values: [alertmanager]}
-            - {key: alertmanager, operator: In, values: [monitoring-nais-alertmanager,monitoring-tenant-alertmanager]}
+          matchLabels:
+            - app.kubernetes.io/name: alertmanager
   policyTypes:
     - Ingress
   podSelector:
