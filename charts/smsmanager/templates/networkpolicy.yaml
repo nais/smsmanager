@@ -9,7 +9,7 @@ spec:
     - from:
       - podSelector:
           matchLabels:
-            - app.kubernetes.io/name: alertmanager
+            app.kubernetes.io/name: alertmanager
   policyTypes:
     - Ingress
   podSelector:
