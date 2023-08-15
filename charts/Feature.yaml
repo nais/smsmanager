@@ -1,0 +1,29 @@
+environmentKinds:
+  - onprem
+  - tenant
+  - legacy
+  - management
+values:
+  clusterKind:
+    computed:
+      template: '"{{ .Kind }}"'
+  image.tag:
+    displayName: Image tag
+    config:
+      type: string
+  smsEndpoint:
+    displayName: SMS-service endpoint
+    required: true
+    config:
+      type: string
+  smsPassword:
+    displayName: SMS-service password
+    required: true
+    config:
+      type: string
+      secret: true
+  smsUsername:
+    displayName: SMS-service username
+    required: true
+    config:
+      type: string
