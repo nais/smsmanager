@@ -25,16 +25,13 @@ spec:
               protocol: TCP
           env:
             - name: sms_endpoint
-              value: {{ .Values.smsEndpoint }}
-            - name: username
               valueFrom:
                 secretKeyRef:
                   name: {{ .Release.Name }}
-                  key: username
-            - name: password
-              valueFrom:
-                secretKeyRef:
-                  name: {{ .Release.Name }}
-                  key: password
+                  key: endpoint
+            - name: host
+              value: {{ .Values.smsHost }}
+            - name: port
+              value: {{ .Values.smsPort }}
           securityContext:
             {{- toYaml .Values.securityContext | nindent 12 }}

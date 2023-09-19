@@ -12,18 +12,18 @@ values:
     config:
       type: string
   smsEndpoint:
-    displayName: SMS-service endpoint
-    required: true
-    config:
-      type: string
-  smsPassword:
-    displayName: SMS-service password
+    displayName: SMS-service endpoint (with username and password)
     required: true
     config:
       type: string
       secret: true
-  smsUsername:
-    displayName: SMS-service username
+  smsHost:
+    displayName: SMS-service hostname
+    required: true
+    config:
+      type: string
+  smsPort:
+    displayName: SMS-service port for host
     required: true
     config:
       type: string

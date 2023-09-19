@@ -22,11 +22,11 @@ metadata:
 spec:
   egress:
   - ports:
-    - port: 8080
+    - port: {{ .Values.smsPort }}
       protocol: TCP
     to:
     - fqdns:
-      - sysmanp.adeo.no
+      - {{ .Values.smsHost }}
   podSelector:
     matchLabels: {{ include "smsmanager.selectorLabels" . | nindent 6 }}
   policyTypes:

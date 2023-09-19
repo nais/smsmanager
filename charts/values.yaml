@@ -4,9 +4,9 @@ image:
   pullPolicy: IfNotPresent
   pullSecret: "gpr-credentials"
 
-smsEndpoint: ""
-smsUsername: ""
-smsPassword: ""
+smsEndpoint: "http://{}:{}/sms"
+smsPort: 8080
+smsHost: sysmanp.adeo.no
 
 clusterKind: "" # mapped by fasit
 
