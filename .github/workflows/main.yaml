@@ -52,4 +52,3 @@ jobs:
         with:
           chart: ${{ env.FEATURE_REPOSITORY }}/${{ env.NAME }}
           version: ${{ needs.build_and_push.outputs.version }}
-          feature_name: ${{ env.NAME }}
