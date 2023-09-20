@@ -24,16 +24,13 @@ values:
       type: string
   smsEndpoint:
     displayName: SMS-service endpoint
-    required: true
     config:
       type: string
   smsHost:
     displayName: SMS-service hostname
-    required: true
     config:
       type: string
   smsPort:
     displayName: SMS-service port for host
-    required: true
     config:
       type: string
