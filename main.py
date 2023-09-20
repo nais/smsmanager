@@ -8,7 +8,9 @@ from fastapi import FastAPI, Request
 
 logger = logging.getLogger('gunicorn.error')
 app = FastAPI()
-endpoint = os.environ['sms_endpoint']
+endpoint = os.environ['endpoint']
+username = os.environ['username']
+password = os.environ['password']
 host = os.environ['host']
 port = os.environ['port']
 
@@ -26,7 +28,7 @@ def format_message(alert):
 
 
 def send_sms(message, recipients):
-    formatted = endpoint.format(host, port, recipients, message)
+    formatted = endpoint.format(host, port, recipients, message, username, password)
     response = urllib.request.urlopen(formatted).read()
     if response != b'Request processed OK':
         logger.error(response)

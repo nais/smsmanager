@@ -11,12 +11,22 @@ values:
     displayName: Image tag
     config:
       type: string
-  smsEndpoint:
-    displayName: SMS-service endpoint (with username and password)
+  smsPassword:
+    displayName: SMS-service password
     required: true
     config:
       type: string
       secret: true
+  smsUsername:
+    displayName: SMS-service username
+    required: true
+    config:
+      type: string
+  smsEndpoint:
+    displayName: SMS-service endpoint
+    required: true
+    config:
+      type: string
   smsHost:
     displayName: SMS-service hostname
     required: true
