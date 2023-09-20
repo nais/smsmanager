@@ -11,14 +11,11 @@ spec:
     metadata:
       labels: {{ include "smsmanager.labels" . | nindent 8 }}
     spec:
-      imagePullSecrets:
-        - name: {{ .Values.image.pullSecret }}
       securityContext:
         {{- toYaml .Values.podSecurityContext | nindent 8}}
       containers:
         - name: {{ .Release.Name }}
           image: {{ .Values.image.repository }}:{{ .Values.image.tag }}
-          imagePullPolicy: {{ .Values.image.pullPolicy }}
           ports:
             - name: http
               containerPort: 80

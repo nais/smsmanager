@@ -27,6 +27,9 @@ jobs:
           workload_identity_provider: ${{ secrets.NAIS_IO_WORKLOAD_IDENTITY_PROVIDER }}
           push: true
 
+      - name: Set image version
+        run: yq e '.image.tag = "${{ steps.build-push-sign.outputs.tag }}"' --inplace "${chart}/values.yaml"
+
       - uses: azure/setup-helm@v3
         name: "Setup Helm"
         with:
