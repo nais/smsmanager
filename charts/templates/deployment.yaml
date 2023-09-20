@@ -37,7 +37,7 @@ spec:
             - name: host
               value: {{ .Values.smsHost }}
             - name: port
-              value: "{{ .Values.smsPort }}"
+              value: {{ .Values.smsPort | quote }}
             - name: endpoint
               value: {{ .Values.smsEndpoint }}
           securityContext:
