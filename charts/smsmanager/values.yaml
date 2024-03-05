@@ -8,6 +8,9 @@ smsEndpoint: ""
 smsUsername: ""
 smsPassword: ""
 
+naisVakt:
+  smsNumber: ""
+
 clusterKind: "" # mapped by fasit
 
 podSecurityContext: {}
