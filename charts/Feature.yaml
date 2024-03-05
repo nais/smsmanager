@@ -4,6 +4,10 @@ environmentKinds:
   - legacy
   - management
 values:
+  naisVakt.smsNumber:
+    displayName: SMS number for nais-vakt alerts
+    config:
+      type: string
   clusterKind:
     computed:
       template: '"{{ .Kind }}"'
