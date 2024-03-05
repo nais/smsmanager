@@ -1,0 +1,26 @@
+{{- if .Values.naisVakt.smsNumber }}
+apiVersion: monitoring.coreos.com/v1alpha1
+kind: AlertmanagerConfig
+metadata:
+  name: {{ .Release.Name }}-naisvakt-smsconfig
+spec:
+  receivers:
+    - name: {{ .Release.Name }}-naisvakt-smsconfig
+      webhookConfigs:
+        - sendResolved: true
+          url: http://smsmanager/sms?recipients={{ .Values.naisVakt.smsNumber }}
+  route:
+    receiver: {{ .Release.Name }}-naisvakt-smsconfig
+    matchers:
+      - name: namespace
+        value: "{{ .Release.Namespace }}"
+        matchType: =
+      - name: ping
+        value: nais-vakt
+        matchType: =
+    groupBy:
+      - alertname
+    groupInterval: 5m
+    groupWait: 10s
+    repeatInterval: 1h
+{{- end }}
