@@ -7,7 +7,7 @@ naisVakt:
 
 smsEndpoint: "http://{}:{}/sms?recipients={}&message={}&messageType=TEXT&LogDelivery=NO&username={}&password={}"
 smsPort: 8080
-smsHost: sysmanp.adeo.no
+smsHost: sysman.adeo.no
 
 clusterKind: "" # mapped by fasit
 
