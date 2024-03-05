@@ -5,7 +5,7 @@ environmentKinds:
   - management
 values:
   naisVakt.smsNumber:
-    displayName: SMS number for nais-vakt alerts
+    displayName: SMS number for nais alerts
     config:
       type: string
   naisVakt.pingAlertsOnly:
