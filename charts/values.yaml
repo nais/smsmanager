@@ -4,6 +4,7 @@ image:
 
 naisVakt:
   smsNumber: ""
+  pingAlertsOnly: true
 
 smsEndpoint: "http://{}:{}/sms?recipients={}&message={}&messageType=TEXT&LogDelivery=NO&username={}&password={}"
 smsPort: 8080

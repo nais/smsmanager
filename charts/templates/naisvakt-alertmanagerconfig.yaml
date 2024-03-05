@@ -15,9 +15,15 @@ spec:
       - name: namespace
         value: "{{ .Release.Namespace }}"
         matchType: =
+{{- if .Values.naisVakt.pingAlertsOnly }}
       - name: ping
         value: nais-vakt
         matchType: =
+{{- else }}
+      - name: severity
+        value: critical
+        matchType: =
+{{- end }}
     groupBy:
       - alertname
     groupInterval: 5m

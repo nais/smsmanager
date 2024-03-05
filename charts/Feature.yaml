@@ -8,6 +8,11 @@ values:
     displayName: SMS number for nais-vakt alerts
     config:
       type: string
+  naisVakt.pingAlertsOnly:
+    displayName: SMS only on alerts tagged nais-vakt
+    description: "Disable to get SMS on all critical alerts"
+    config:
+      type: bool
   clusterKind:
     computed:
       template: '"{{ .Kind }}"'
