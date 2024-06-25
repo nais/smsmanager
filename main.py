@@ -20,11 +20,24 @@ def transform_text(text):
 
 
 def format_message(alert):
+    status = alert['status'].upper()
+    alert = alert['labels']['alertname']
+    clusterID = alert['labels']['tenant_cluster_id']
+    description = ''
+    if 'description' in alert['annotations']:
+        description = alert['annotations']['description']
+    elif 'summery' in alert['annotations']:
+        description = alert['annotations']['summery']
+    elif 'action' in alert['annotations']:
+        description = alert['annotations']['action']
+    else:
+        description = 'No description provided'
+
     return '[{}] {} in {}%0a{}'.format(
-        alert['status'].upper(),
-        alert['labels']['alertname'],
-        alert['labels']['tenant_cluster_id'],
-        alert['annotations']['summary'])
+        status,
+        alert,
+        clusterID,
+        description)
 
 
 def send_sms(message, recipients):
