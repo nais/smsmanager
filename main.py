@@ -59,8 +59,12 @@ async def sms(request: Request, recipients):
         logger.info(json['alerts'])
 
     for alert in json['alerts']:
-        message = format_message(alert)
-        send_sms(transform_text(message), recipients)
+        try:
+            message = format_message(alert)
+            send_sms(transform_text(message), recipients)
+        except TypeError as te:
+            logger.error(te)
+            logger.error(alert)
 
 
 if __name__ == "__main__":
