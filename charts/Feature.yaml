@@ -31,8 +31,8 @@ values:
     required: true
     config:
       type: string
-  smsEndpoint:
-    displayName: SMS-service endpoint
+  smsHost:
+    displayName: SMS-service domain
     config:
       type: string
   platformPartnerId:
