@@ -3,6 +3,7 @@ import os
 import socket
 import urllib.request
 
+import requests
 import uvicorn
 from fastapi import FastAPI, Request
 
@@ -11,13 +12,7 @@ app = FastAPI()
 endpoint = os.environ['endpoint']
 username = os.environ['username']
 password = os.environ['password']
-host = os.environ['host']
-port = os.environ['port']
-
-
-def transform_text(text):
-    return text.replace(' ', '%20').replace('\n', '%0a')
-
+platformPartnerId = os.environ['platformPartnerId']
 
 def format_message(alert):
     status = alert['status'].upper()
@@ -39,7 +34,7 @@ def format_message(alert):
     else:
         description = 'No description provided'
 
-    return '[{}] {} in {}%0a{}'.format(
+    return '[{}] {} in {}\n{}'.format(
         status,
         name,
         cluster_id,
@@ -47,10 +42,22 @@ def format_message(alert):
 
 
 def send_sms(message, recipients):
-    formatted = endpoint.format(host, port, recipients, message, username, password)
-    response = urllib.request.urlopen(formatted).read()
-    if response != b'Request processed OK':
-        logger.error(response)
+    recipients = recipients.split(',')
+    for recipient in recipients:
+        if not recipient.startswith('+'):
+            recipient = '+47' + recipient
+
+        resp = requests.post(endpoint, data={}, auth=(username, password), json={
+            'source': 'NAIS',
+            'platformId': 'SMS',
+            'platformPartnerId': platformPartnerId,
+            'destination': recipient,
+            'userData': message,
+        })
+
+        if resp.status_code != 200:
+            logger.error('Failed sending message: {}'.format(resp.text))
+            return
 
 
 @app.get("/")
@@ -67,9 +74,9 @@ async def sms(request: Request, recipients):
     for alert in json['alerts']:
         try:
             message = format_message(alert)
-            send_sms(transform_text(message), recipients)
-        except TypeError as te:
-            logger.error(te)
+            send_sms(message, recipients)
+        except TypeError as e:
+            logger.error(e)
             logger.error(alert)
 
 

@@ -35,11 +35,8 @@ values:
     displayName: SMS-service endpoint
     config:
       type: string
-  smsHost:
-    displayName: SMS-service hostname
-    config:
-      type: string
-  smsPort:
-    displayName: SMS-service port for host
+  platformPartnerId:
+    displayName: LinkMobility partner ID
+    required: true
     config:
       type: string

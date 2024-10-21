@@ -6,9 +6,7 @@ naisVakt:
   smsNumber: ""
   pingAlertsOnly: true
 
-smsEndpoint: "http://{}:{}/sms?recipients={}&message={}&messageType=TEXT&LogDelivery=NO&username={}&password={}"
-smsPort: 8080
-smsHost: sysman.adeo.no
+smsEndpoint: "https://n-eu.linkmobility.io/sms/send"
 
 clusterKind: "" # mapped by fasit
 

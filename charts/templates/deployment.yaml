@@ -31,10 +31,8 @@ spec:
                 secretKeyRef:
                   name: {{ .Release.Name }}
                   key: password
-            - name: host
-              value: {{ .Values.smsHost }}
-            - name: port
-              value: {{ .Values.smsPort | quote }}
+            - name: platformPartnerId
+              value: {{ .Values.platformPartnerId }}
             - name: endpoint
               value: {{ .Values.smsEndpoint }}
           securityContext:
