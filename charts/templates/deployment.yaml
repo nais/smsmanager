@@ -33,7 +33,7 @@ spec:
                   key: password
             - name: platformPartnerId
               value: {{ .Values.platformPartnerId }}
-            - name: endpoint
-              value: {{ .Values.smsEndpoint }}
+            - name: host
+              value: {{ .Values.smsHost }}
           securityContext:
             {{- toYaml .Values.securityContext | nindent 12 }}

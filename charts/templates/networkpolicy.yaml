@@ -24,7 +24,7 @@ metadata:
 spec:
   egress:
   - ports:
-    - port: {{ .Values.smsPort }}
+    - port: 443
       protocol: TCP
     to:
     - fqdns:

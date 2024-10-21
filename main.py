@@ -9,7 +9,7 @@ from fastapi import FastAPI, Request
 
 logger = logging.getLogger('gunicorn.error')
 app = FastAPI()
-endpoint = os.environ['endpoint']
+host = os.environ['host']
 username = os.environ['username']
 password = os.environ['password']
 platformPartnerId = os.environ['platformPartnerId']
@@ -47,7 +47,8 @@ def send_sms(message, recipients):
         if not recipient.startswith('+'):
             recipient = '+47' + recipient
 
-        resp = requests.post(endpoint, data={}, auth=(username, password), json={
+        url = 'https://{}/sms/send'.format(host)
+        resp = requests.post(url, data={}, auth=(username, password), json={
             'source': 'NAIS',
             'platformId': 'SMS',
             'platformPartnerId': platformPartnerId,

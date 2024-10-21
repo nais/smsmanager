@@ -6,7 +6,7 @@ naisVakt:
   smsNumber: ""
   pingAlertsOnly: true
 
-smsEndpoint: "https://n-eu.linkmobility.io/sms/send"
+smsHost: "n-eu.linkmobility.io"
 
 clusterKind: "" # mapped by fasit
 
