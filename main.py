@@ -5,7 +5,7 @@ import urllib.request
 
 import requests
 import uvicorn
-from fastapi import FastAPI, Request
+from fastapi import FastAPI, Request, Response
 
 logger = logging.getLogger('gunicorn.error')
 app = FastAPI()
@@ -43,6 +43,8 @@ def format_message(alert):
 
 def send_sms(message, recipients):
     recipients = recipients.split(',')
+
+    status_code = 200
     for recipient in recipients:
         if not recipient.startswith('+'):
             recipient = '+47' + recipient
@@ -58,7 +60,9 @@ def send_sms(message, recipients):
 
         if resp.status_code != 200:
             logger.error('Failed sending message: {}'.format(resp.text))
-            return
+            status_code = resp.status_code
+
+    return status_code
 
 
 @app.get("/")
@@ -67,18 +71,26 @@ async def index():
 
 
 @app.post("/sms")
-async def sms(request: Request, recipients):
+async def sms(recipients, request: Request, response: Response):
     json = await request.json()
     if len(json['alerts']) > 1:
         logger.info(json['alerts'])
 
+    response.status_code = 200
     for alert in json['alerts']:
         try:
             message = format_message(alert)
-            send_sms(message, recipients)
+            status_code = send_sms(message, recipients)
+
+            if status_code > response.status_code:
+                response.status_code = status_code
         except TypeError as e:
             logger.error(e)
             logger.error(alert)
+
+    if response.status_code != 200:
+        return {"message": "Failed to send SMS"}
+    return {"message": "SMS sent"}
 
 
 if __name__ == "__main__":
