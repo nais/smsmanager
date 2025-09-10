@@ -20,6 +20,13 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+
+      - id: "auth"
+        name: "Authenticate to Google Cloud"
+        uses: "nais/login@v0"
+        with:
+          team: nais
+
       - uses: nais/platform-build-push-sign@main
         id: build-push-sign
         with:
