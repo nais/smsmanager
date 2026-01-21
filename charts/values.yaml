@@ -10,6 +10,7 @@ smsHost: "n-eu.linkmobility.io"
 
 clusterKind: "" # mapped by fasit
 
+extraEnv: {}
 podSecurityContext: {}
 
 securityContext:
