@@ -18,7 +18,7 @@ jobs:
     name: build and push
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
 
       - uses: nais/platform-build-push-sign@main
         id: build-push-sign
@@ -52,7 +52,7 @@ jobs:
     permissions:
       id-token: write
     steps:
-      - uses: nais/fasit-deploy@v2
+      - uses: nais/fasit-deploy@v3
         with:
           chart: ${{ env.FEATURE_REPOSITORY }}/${{ env.NAME }}
           version: ${{ needs.build_and_push.outputs.version }}
