@@ -39,6 +39,7 @@ def format_message(alert):
         name,
         cluster_id,
         description)
+    logger.info("Alert=%, Status=%, Cluster=%", name, status, cluster_id)
 
 
 def send_sms(message, recipients):
