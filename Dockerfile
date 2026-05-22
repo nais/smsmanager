@@ -8,7 +8,7 @@ RUN python -m pip install --upgrade pip \
 
 FROM cgr.dev/chainguard/python:latest
 WORKDIR /app
-COPY main.py .
+COPY main.py oncall.py .
 COPY --from=builder /app/venv /app/venv
 ENV PATH="/app/venv/bin:$PATH"
 ENTRYPOINT ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8080"]
