@@ -30,7 +30,7 @@ spec:
     - fqdns:
       - {{ .Values.smsHost }}
       - docs.google.com
-      - "*.googleusercontent.com"
+      - googleusercontent.com
   podSelector:
     matchLabels: {{ include "smsmanager.selectorLabels" . | nindent 6 }}
   policyTypes:
