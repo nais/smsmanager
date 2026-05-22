@@ -3,7 +3,6 @@ image:
   tag: "latest"
 
 naisVakt:
-  smsNumber: ""
   pingAlertsOnly: true
 
 smsHost: "n-eu.linkmobility.io"

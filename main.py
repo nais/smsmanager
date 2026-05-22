@@ -7,6 +7,8 @@ import requests
 import uvicorn
 from fastapi import FastAPI, Request, Response
 
+from oncall import get_on_duty_number
+
 logger = logging.getLogger("gunicorn.error")
 app = FastAPI()
 host = os.environ["host"]
@@ -78,6 +80,16 @@ async def sms(recipients, request: Request, response: Response):
     json = await request.json()
     if len(json["alerts"]) > 1:
         logger.info(json["alerts"])
+
+    common_labels = json.get("commonLabels", {})
+    if common_labels.get("ping") == "nais-vakt":
+        try:
+            recipients = get_on_duty_number()
+            logger.info("Resolved nais-vakt on-duty number: %s", recipients)
+        except Exception as e:
+            logger.error("Failed to resolve nais-vakt on-duty number: %s", e)
+            response.status_code = 500
+            return {"message": "Failed to resolve on-duty number"}
 
     response.status_code = 200
     for alert in json["alerts"]:

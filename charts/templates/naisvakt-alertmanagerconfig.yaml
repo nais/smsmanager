@@ -8,7 +8,7 @@ spec:
     - name: {{ .Release.Name }}-naisvakt-smsconfig
       webhookConfigs:
         - sendResolved: true
-          url: http://smsmanager/sms?recipients={{ .Values.naisVakt.smsNumber }}
+          url: http://smsmanager/sms?recipients=naisvakt
   route:
     receiver: {{ .Release.Name }}-naisvakt-smsconfig
     matchers:

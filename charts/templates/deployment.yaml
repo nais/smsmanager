@@ -31,6 +31,11 @@ spec:
                 secretKeyRef:
                   name: {{ .Release.Name }}
                   key: password
+            - name: SPREADSHEET_ID
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .Release.Name }}
+                  key: spreadsheet_id
             - name: platformPartnerId
               value: {{ .Values.platformPartnerId }}
             - name: host
