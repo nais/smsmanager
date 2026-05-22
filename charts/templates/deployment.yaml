@@ -21,12 +21,12 @@ spec:
               containerPort: 80
               protocol: TCP
           env:
-            - name: username
+            - name: USERNAME
               valueFrom:
                 secretKeyRef:
                   name: {{ .Release.Name }}
                   key: username
-            - name: password
+            - name: PASSWORD
               valueFrom:
                 secretKeyRef:
                   name: {{ .Release.Name }}
@@ -36,9 +36,9 @@ spec:
                 secretKeyRef:
                   name: {{ .Release.Name }}
                   key: spreadsheet_id
-            - name: platformPartnerId
+            - name: PLATFORM_PARTNER_ID
               value: {{ .Values.platformPartnerId }}
-            - name: host
+            - name: HOST
               value: {{ .Values.smsHost }}
             {{- range $key, $value := .Values.extraEnv }}
             - name: {{ $key }}

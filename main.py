@@ -11,10 +11,10 @@ from oncall import get_on_duty_number
 
 logger = logging.getLogger("gunicorn.error")
 app = FastAPI()
-host = os.environ["host"]
-username = os.environ["username"]
-password = os.environ["password"]
-platformPartnerId = os.environ["platformPartnerId"]
+host = os.environ["HOST"]
+username = os.environ["USERNAME"]
+password = os.environ["PASSWORD"]
+platformPartnerId = os.environ["PLATFORM_PARTNER_ID"]
 
 
 def format_message(alert):
