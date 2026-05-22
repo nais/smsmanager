@@ -1,0 +1,20 @@
+[tools]
+python = "3.11"
+uv = "latest"
+
+[tasks.install]
+description = "Install dependencies"
+run = "uv sync"
+
+[tasks.format]
+description = "Format code with ruff"
+run = "uv run ruff format ."
+
+[tasks.local]
+description = "Run the app locally (requires env vars set via fnox)"
+run = "fnox exec -- uv run uvicorn main:app --host 0.0.0.0 --port 8080 --reload"
+
+[tasks.test]
+description = "Run tests"
+run = "uv run pytest test_main.py -v"
+

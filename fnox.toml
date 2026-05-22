@@ -1,0 +1,13 @@
+default_provider = "keychain"
+
+[providers.keychain]
+type = "keychain"
+service = "smsmanager"
+prefix = "smsmanager"
+
+[secrets]
+HOST= { provider = "keychain", value = "HOST" }
+PLATFORM_PARTNER_ID= { provider = "keychain", value = "PLATFORM_PARTNER_ID" }
+USERNAME= { provider = "keychain", value = "USERNAME" }
+PASSWORD= { provider = "keychain", value = "PASSWORD" }
+SPREADSHEET_ID= { provider = "keychain", value = "SPREADSHEET_ID" }

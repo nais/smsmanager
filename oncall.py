@@ -68,6 +68,4 @@ def get_on_duty_number() -> str:
         if name.lower() == best_person.lower() and phone:
             return phone
 
-    raise RuntimeError(
-        f"On-duty person '{best_person}' not found in contacts sheet"
-    )
+    raise RuntimeError(f"On-duty person '{best_person}' not found in contacts sheet")
