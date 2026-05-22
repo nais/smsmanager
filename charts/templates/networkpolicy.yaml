@@ -29,6 +29,7 @@ spec:
     to:
     - fqdns:
       - {{ .Values.smsHost }}
+      - docs.google.com
   podSelector:
     matchLabels: {{ include "smsmanager.selectorLabels" . | nindent 6 }}
   policyTypes:
