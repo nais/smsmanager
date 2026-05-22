@@ -9,7 +9,20 @@ env:
   FEATURE_REPOSITORY: oci://europe-north1-docker.pkg.dev/nais-io/nais/feature
 
 jobs:
+  test:
+    name: test
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # ratchet:actions/checkout@v6
+
+      - uses: astral-sh/setup-uv@v6
+
+      - name: Run tests
+        run: uv run pytest test_main.py -v
+
   build_and_push:
+    needs:
+      - test
     outputs:
       version: ${{ steps.build-push-sign.outputs.version }}
     permissions:
