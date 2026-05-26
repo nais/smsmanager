@@ -31,11 +31,11 @@ spec:
                 secretKeyRef:
                   name: {{ .Release.Name }}
                   key: password
-            - name: SPREADSHEET_ID
+            - name: CALENDAR_ICS_URL
               valueFrom:
                 secretKeyRef:
                   name: {{ .Release.Name }}
-                  key: spreadsheet_id
+                  key: calendar_ics_url
             - name: PLATFORM_PARTNER_ID
               value: {{ .Values.platformPartnerId }}
             - name: HOST

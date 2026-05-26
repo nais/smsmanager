@@ -7,7 +7,7 @@ os.environ["USERNAME"] = "testClient"
 os.environ["PASSWORD"] = "123"
 os.environ["HOST"] = "localhost"
 os.environ["PLATFORM_PARTNER_ID"] = "test"
-os.environ["SPREADSHEET_ID"] = "test"
+os.environ["CALENDAR_ICS_URL"] = "https://example.com/calendar.ics"
 
 from main import app, format_message
 
