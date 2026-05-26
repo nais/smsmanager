@@ -10,8 +10,15 @@ spec:
       - podSelector:
           matchLabels:
             app.kubernetes.io/name: alertmanager
+  egress:
+    - ports:
+        - port: 53
+          protocol: UDP
+        - port: 53
+          protocol: TCP
   policyTypes:
     - Ingress
+    - Egress
   podSelector:
     matchLabels: {{ include "smsmanager.selectorLabels" . | nindent 6 }}
 ---
