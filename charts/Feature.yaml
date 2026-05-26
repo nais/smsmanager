@@ -31,8 +31,8 @@ values:
     required: true
     config:
       type: string
-  spreadsheetId:
-    displayName: Google Spreadsheet ID for on-call lookup
+  calendarIcsUrl:
+    displayName: Google Calendar ICS URL (private)
     required: true
     config:
       type: string
