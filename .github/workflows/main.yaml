@@ -73,8 +73,5 @@ jobs:
           version: ${{ needs.build_and_push.outputs.version }}
           targets: |
             [
-              { "target": { "kind": "tenant", "tenant": "ci-nais" }, "wait": true },
-              { "target": { "kind": "tenant" } },
-              { "target": { "kind": "onprem", "tenant": "ci-nais" }, "wait": true },
-              { "target": { "kind": "onprem" } }
+              { "target": { "kind": "management" }
             ]
