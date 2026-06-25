@@ -78,8 +78,7 @@ async def index():
 @app.post("/sms")
 async def sms(recipients, request: Request, response: Response):
     json = await request.json()
-    if len(json["alerts"]) > 1:
-        logger.info(json["alerts"])
+    logger.info(json["alerts"])
 
     common_labels = json.get("commonLabels", {})
     if common_labels.get("ping") == "nais-vakt":
