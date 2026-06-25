@@ -73,5 +73,5 @@ jobs:
           version: ${{ needs.build_and_push.outputs.version }}
           targets: |
             [
-              { "target": { "kind": "management" }
+              { "target": { "kind": "management" } }
             ]
