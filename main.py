@@ -99,7 +99,7 @@ async def sms(recipients, request: Request, response: Response):
 
             if status_code > response.status_code:
                 response.status_code = status_code
-        except TypeError as e:
+        except Exception as e:
             logger.error(e)
             logger.error(alert)
 
