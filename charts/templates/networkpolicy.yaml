@@ -9,7 +9,7 @@ spec:
     - from:
       - podSelector:
           matchLabels:
-            app.kubernetes.io/name: alertmanager
+            app.kubernetes.io/name: mimir
   egress:
     - ports:
         - port: 53
