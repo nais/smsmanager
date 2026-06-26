@@ -5,7 +5,7 @@ from datetime import date
 import requests
 from icalendar import Calendar
 
-logger = logging.getLogger("gunicorn.error")
+logger = logging.getLogger(__name__)
 
 CALENDAR_ICS_URL = os.environ["CALENDAR_ICS_URL"]
 

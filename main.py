@@ -9,7 +9,8 @@ from fastapi import FastAPI, Request, Response
 
 from oncall import get_on_duty_number
 
-logger = logging.getLogger("gunicorn.error")
+logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger(__name__)
 app = FastAPI()
 host = os.environ["HOST"]
 username = os.environ["USERNAME"]
@@ -38,7 +39,9 @@ def format_message(alert):
     else:
         description = "No description provided"
 
-    logger.info("Alert=%, Status=%, Tenant=%, Cluster=%", name, status, tenant, cluster)
+    logger.info(
+        "Alert=%s, Status=%s, Tenant=%s, Cluster=%s", name, status, tenant, cluster
+    )
     return "[{}] {} in {}/{}\n{}".format(status, name, tenant, cluster, description)
 
 
@@ -65,8 +68,10 @@ def send_sms(message, recipients):
         )
 
         if resp.status_code != 200:
-            logger.error("Failed sending message: {}".format(resp.text))
+            logger.error("Failed sending message: %s", resp.text)
             status_code = resp.status_code
+        else:
+            logger.info("SMS sent successfully to")
 
     return status_code
 
@@ -100,8 +105,7 @@ async def sms(recipients, request: Request, response: Response):
             if status_code > response.status_code:
                 response.status_code = status_code
         except Exception as e:
-            logger.error(e)
-            logger.error(alert)
+            logger.exception("Error processing alert %s: %s", alert, e)
 
     if response.status_code != 200:
         return {"message": "Failed to send SMS"}
