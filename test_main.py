@@ -8,6 +8,7 @@ os.environ["PASSWORD"] = "123"
 os.environ["HOST"] = "localhost"
 os.environ["PLATFORM_PARTNER_ID"] = "test"
 os.environ["CALENDAR_ICS_URL"] = "https://example.com/calendar.ics"
+os.environ["TENANT"] = "localhost"
 
 from main import app, format_message
 
@@ -23,30 +24,32 @@ def test_index():
 class TestFormatMessage:
     def test_alert(self):
         alert = {
-            "status": "resolved",
+            "status": "firing",
             "labels": {
-                "alertname": "Kafka connectivity test failing",
-                "instance": "http://contests/kafka",
-                "job": "probe/nais-system/contests-probes",
+                "alertname": "kyrrev5",
+                "container": "unleash",
+                "endpoint": "http",
+                "instance": "10.43.41.46:4242",
+                "job": "yrkesskade",
+                "k8s_cluster_name": "management",
                 "namespace": "nais-system",
                 "ping": "nais-vakt",
-                "prometheus": "nais-system/monitoring-nais-prometheus",
+                "pod": "yrkesskade-59cbdb586c-hxqtx",
+                "service": "yrkesskade",
                 "severity": "critical",
-                "tenant": "nav",
-                "tenant_cluster": "dev-gcp",
-                "tenant_cluster_id": "nav-dev-gcp",
             },
             "annotations": {
-                "action": "Check logs for contests appliction",
-                "consequence": "Kafka may be unavailable in cluster.",
+                "action": "Check Kyrre / application / load balancer / network",
+                "consequence": "Kyrre down / not accessible",
+                "summary": "Probe kyrre is failing",
             },
-            "startsAt": "2024-06-25T13:43:23.303Z",
-            "endsAt": "2024-06-25T13:56:23.303Z",
-            "generatorURL": "https://nais-prometheus.dev-gcp.nav.cloud.nais.io/graph?g0.expr=probe_success%7Binstance%3D~%22http%3A%2F%2Fcontests%2Fkafka%22%7D+%3D%3D+0&g0.tab=1",
-            "fingerprint": "8184e4ed0380b9f7",
+            "startsAt": "2026-06-25T13:56:16.642Z",
+            "endsAt": "0001-01-01T00:00:00Z",
+            "generatorURL": "/graph?g0.expr=up%7Bk8s_cluster_name%3D%22management%22%7D+%3E%3D+1&g0.tab=1",
+            "fingerprint": "61266cd23c82d9dd",
         }
         formatted = format_message(alert)
         assert (
             formatted
-            == "[RESOLVED] Kafka connectivity test failing in nav-dev-gcp\nKafka may be unavailable in cluster."
+            == "[FIRING] kyrrev5 in localhost/management\nKyrre down / not accessible"
         )
