@@ -1,3 +1,4 @@
+{{- if .Values.clusterKind "management" }}
 apiVersion: monitoring.coreos.com/v1alpha1
 kind: AlertmanagerConfig
 metadata:
@@ -22,3 +23,4 @@ spec:
     groupInterval: 5m
     groupWait: 10s
     repeatInterval: 1h
+{{- end }}
