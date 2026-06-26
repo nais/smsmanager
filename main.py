@@ -15,6 +15,7 @@ host = os.environ["HOST"]
 username = os.environ["USERNAME"]
 password = os.environ["PASSWORD"]
 platformPartnerId = os.environ["PLATFORM_PARTNER_ID"]
+tenant = os.environ["TENANT"]
 
 
 def format_message(alert):
@@ -22,7 +23,7 @@ def format_message(alert):
 
     labels = alert["labels"]
     name = labels["alertname"]
-    cluster_id = labels["tenant_cluster_id"]
+    cluster = labels["k8s_cluster_name"]
 
     annotations = alert["annotations"]
     description = ""
@@ -37,8 +38,8 @@ def format_message(alert):
     else:
         description = "No description provided"
 
-    logger.info("Alert=%, Status=%, Cluster=%", name, status, cluster_id)
-    return "[{}] {} in {}\n{}".format(status, name, cluster_id, description)
+    logger.info("Alert=%, Status=%, Tenant=%, Cluster=%", name, status, tenant, cluster)
+    return "[{}] {} in {}/{}\n{}".format(status, name, tenant, cluster, description)
 
 
 def send_sms(message, recipients):

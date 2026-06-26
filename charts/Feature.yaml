@@ -49,3 +49,6 @@ values:
       type: string
     ignoreKind:
       - tenant
+  extraEnv.TENANT:
+    computed:
+      template: '"{{ .Tenant.Name }}"'
