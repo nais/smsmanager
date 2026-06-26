@@ -1,4 +1,4 @@
-{{- if .Values.clusterKind "management" }}
+{{- if .Values.fasit.env.kind "management" -}}
 apiVersion: monitoring.coreos.com/v1alpha1
 kind: AlertmanagerConfig
 metadata:

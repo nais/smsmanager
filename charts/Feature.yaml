@@ -4,9 +4,6 @@ environmentKinds:
   - legacy
   - management
 values:
-  clusterKind:
-    computed:
-      template: '"{{ .Kind }}"'
   image.tag:
     displayName: Image tag
     config:
