@@ -15,9 +15,9 @@ jobs:
     permissions:
       contents: read
     steps:
-      - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # ratchet:actions/checkout@v7.0.0
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # ratchet:actions/checkout@v7.0.1
 
-      - uses: astral-sh/setup-uv@fac544c07dec837d0ccb6301d7b5580bf5edae39 # ratchet:astral-sh/setup-uv@v8
+      - uses: astral-sh/setup-uv@c771a70e6277c0a99b617c7a806ffedaca235ff9 # ratchet:astral-sh/setup-uv@v8
 
       - name: Run tests
         run: uv run pytest test_main.py -v
@@ -33,7 +33,7 @@ jobs:
     name: build and push
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # ratchet:actions/checkout@v7.0.0
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # ratchet:actions/checkout@v7.0.1
 
       - uses: nais/platform-build-push-sign@df590279b21bc5978519685752f9eaddd546043c # ratchet:nais/platform-build-push-sign@main
         id: build-push-sign
@@ -46,7 +46,7 @@ jobs:
       - name: Set image version
         run: yq e '.image.tag = "${{ steps.build-push-sign.outputs.version }}"' --inplace charts/values.yaml
 
-      - uses: azure/setup-helm@dda3372f752e03dde6b3237bc9431cdc2f7a02a2 # ratchet:azure/setup-helm@v5
+      - uses: azure/setup-helm@9bc31f4ebc9c6b171d7bfbaa5d006ae7abdb4310 # ratchet:azure/setup-helm@v5
         name: "Setup Helm"
         with:
           version: "v3.12.0"
