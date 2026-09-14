@@ -74,4 +74,6 @@ jobs:
           targets: |
             [
               { "target": { "kind": "management" } }
+              { "target": { "kind": "tenant" } }
+              { "target": { "kind": "onprem" } }
             ]
