@@ -4,6 +4,7 @@ image:
 
 naisVakt:
   pingAlertsOnly: true
+  smsAlertsEnabled: true
 
 smsHost: "n-eu.linkmobility.io"
 
