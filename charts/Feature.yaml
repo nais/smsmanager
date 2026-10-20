@@ -1,7 +1,6 @@
 environmentKinds:
   - onprem
   - tenant
-  - legacy
   - management
 values:
   image.tag:
@@ -34,6 +33,14 @@ values:
     config:
       type: string
       secret: true
+  naisvakt.smsAlertsEnabled:
+    displayName: Send Naisvakt alerts as SMS
+    description: Creates the AlertmanagerConfig that routes ping=nais-vakt alerts to Smsmanager. Set to false to disable SMS alerts for Naisvakt in this environment.
+    config:
+      type: bool
+    ignoreKind:
+      - onprem
+      - tenant
   extraEnv.HTTPS_PROXY:
     displayName: HTTPS proxy
     config:

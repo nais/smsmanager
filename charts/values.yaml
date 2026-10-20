@@ -2,8 +2,8 @@ image:
   repository: europe-north1-docker.pkg.dev/nais-io/nais/images/smsmanager
   tag: "latest"
 
-naisVakt:
-  pingAlertsOnly: true
+naisvakt:
+  smsAlertsEnabled: true
 
 smsHost: "n-eu.linkmobility.io"
 

@@ -1,4 +1,4 @@
-{{- if eq .Values.fasit.env.kind "management" -}}
+{{- if and (eq .Values.fasit.env.kind "management") .Values.naisvakt.smsAlertsEnabled -}}
 apiVersion: monitoring.coreos.com/v1alpha1
 kind: AlertmanagerConfig
 metadata:
