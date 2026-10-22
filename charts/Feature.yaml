@@ -2,6 +2,9 @@ environmentKinds:
   - onprem
   - tenant
   - management
+dependencies:
+  - allOf:
+      - fqdn-policy-crds
 values:
   image.tag:
     displayName: Image tag
