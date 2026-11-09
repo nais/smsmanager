@@ -96,14 +96,17 @@ async def sms(recipients, request: Request, response: Response):
             response.status_code = 500
             return {"message": "Failed to resolve on-duty number"}
 
+        if recipients is None:
+            response.status_code = 200
+            return {"message": "On-duty person opted out of SMS"}
+
     response.status_code = 200
     for alert in json["alerts"]:
         try:
             message = format_message(alert)
             status_code = send_sms(message, recipients)
+            response.status_code = max(response.status_code, status_code)
 
-            if status_code > response.status_code:
-                response.status_code = status_code
         except Exception as e:
             logger.exception("Error processing alert %s: %s", alert, e)
 

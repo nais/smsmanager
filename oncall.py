@@ -22,14 +22,17 @@ _session.mount("https://", HTTPAdapter(max_retries=_retry))
 _session.mount("http://", HTTPAdapter(max_retries=_retry))
 
 
-def get_on_duty_number() -> str:
+def get_on_duty_number() -> str | None:
     """
     Look up the current on-duty person from the nais-vakt Google Calendar ICS feed
     and return their phone number from the event description.
 
+    Returns None if the on-duty person has an empty description, meaning they
+    opted out of SMS alerts.
+
     Retries up to 3 times with exponential backoff on connection errors and
     transient HTTP failures (429, 500, 502, 503, 504).
-    Raises an exception if the lookup fails for any reason.
+    Raises an exception if no on-duty event is found for today.
     """
     resp = _session.get(CALENDAR_ICS_URL, timeout=10)
     resp.raise_for_status()
@@ -45,7 +48,7 @@ def get_on_duty_number() -> str:
         dtend = component.get("DTEND")
         description = component.get("DESCRIPTION")
 
-        if not dtstart or not dtend or not description:
+        if not dtstart or not dtend:
             continue
 
         start = dtstart.dt
@@ -57,6 +60,11 @@ def get_on_duty_number() -> str:
             end = end.date()
 
         if start <= today < end:
+            if not description or not str(description).strip():
+                logger.info(
+                    "On-duty person for week starting %s opted out of SMS", start
+                )
+                return None
             phone = str(description).strip()
             logger.info("On-duty phone found for week starting %s", start)
             return phone
